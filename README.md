@@ -5,7 +5,7 @@ C++ template project with utest and fakeit
 
 ### utest.h
 * https://github.com/sheredom/utest.h
-* commit ec5e330c2077057a8c29d9e9f267a095e9d5971c
+* commit 06abbd1978f7e9c5f61642d80b9d300e3a8c4ccf
 
 ### FakeIt
 * https://github.com/eranpeer/FakeIt
