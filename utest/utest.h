@@ -44,6 +44,11 @@
 */
 #pragma warning(disable : 4711)
 
+/*
+   Disable warning for alignment padding added
+*/
+#pragma warning(disable : 4820)
+
 #if _MSC_VER > 1900
 /*
   Disable warning about preprocessor macros not being defined in MSVC headers.
@@ -80,6 +85,10 @@ typedef uint32_t utest_uint32_t;
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+
+#if defined(__cplusplus)
+#include <stdexcept>
+#endif
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
@@ -491,7 +500,9 @@ utest_type_printer(long long unsigned int i) {
 
 #ifdef _MSC_VER
 #define UTEST_SURPRESS_WARNING_BEGIN                                           \
-  __pragma(warning(push)) __pragma(warning(disable : 4127))
+  __pragma(warning(push))                                                      \
+  __pragma(warning(disable : 4127))                                            \
+  __pragma(warning(disable : 4571))
 #define UTEST_SURPRESS_WARNING_END __pragma(warning(pop))
 #else
 #define UTEST_SURPRESS_WARNING_BEGIN
@@ -677,6 +688,29 @@ utest_type_printer(long long unsigned int i) {
   while (0)                                                                    \
   UTEST_SURPRESS_WARNING_END
 
+#if defined(__cplusplus)
+#define EXPECT_EXCEPTION(x, exception_type)                                    \
+  UTEST_SURPRESS_WARNING_BEGIN do {                                            \
+    int exception_caught = 0;                                                  \
+    try {                                                                      \
+      x;                                                                       \
+    } catch (const exception_type&) {                                           \
+      exception_caught = 1;                                                    \
+    } catch (...) {                                                             \
+      exception_caught = 2;                                                    \
+    }                                                                          \
+    if (exception_caught != 1) {                                               \
+      UTEST_PRINTF("%s:%u: Failure\n", __FILE__, __LINE__);                    \
+      UTEST_PRINTF("  Expected : %s exception\n", #exception_type);            \
+      UTEST_PRINTF("    Actual : %s\n",                                        \
+        (exception_caught == 2) ? "Unexpected exception" : "No exception");    \
+      *utest_result = 1;                                                       \
+    }                                                                          \
+  }                                                                            \
+  while (0)                                                                    \
+  UTEST_SURPRESS_WARNING_END
+#endif
+
 #if defined(__clang__)
 #define UTEST_ASSERT(x, y, cond)                                               \
   UTEST_SURPRESS_WARNING_BEGIN do {                                            \
@@ -836,6 +870,30 @@ utest_type_printer(long long unsigned int i) {
   }                                                                            \
   while (0)                                                                    \
   UTEST_SURPRESS_WARNING_END
+
+#if defined(__cplusplus)
+#define ASSERT_EXCEPTION(x, exception_type)                                    \
+  UTEST_SURPRESS_WARNING_BEGIN do {                                            \
+    int exception_caught = 0;                                                  \
+    try {                                                                      \
+      x;                                                                       \
+    } catch (const exception_type&) {                                           \
+      exception_caught = 1;                                                    \
+    } catch (...) {                                                             \
+      exception_caught = 2;                                                    \
+    }                                                                          \
+    if (exception_caught != 1) {                                               \
+      UTEST_PRINTF("%s:%u: Failure\n", __FILE__, __LINE__);                    \
+      UTEST_PRINTF("  Expected : %s exception\n", #exception_type);            \
+      UTEST_PRINTF("    Actual : %s\n",                                        \
+        (exception_caught == 2) ? "Unexpected exception" : "No exception");    \
+      *utest_result = 1;                                                       \
+      return;                                                                  \
+    }                                                                          \
+  }                                                                            \
+  while (0)                                                                    \
+  UTEST_SURPRESS_WARNING_END
+#endif
 
 #define UTEST(SET, NAME)                                                       \
   UTEST_EXTERN struct utest_state_s utest_state;                               \
@@ -1202,7 +1260,23 @@ int utest_main(int argc, const char *const argv[]) {
 
     ns = utest_ns();
     errno = 0;
+#if defined(__cplusplus)
+    UTEST_SURPRESS_WARNING_BEGIN
+    try {
+      utest_state.tests[index].func(&result, utest_state.tests[index].index);
+    }
+    catch (const std::exception& err) {
+      printf(" Exception : %s\n", err.what());
+      result = 1;
+    }
+    catch (...) {
+      printf(" Exception : Unknown\n");
+      result = 1;
+    }
+    UTEST_SURPRESS_WARNING_END
+#else
     utest_state.tests[index].func(&result, utest_state.tests[index].index);
+#endif
     ns = utest_ns() - ns;
 
     if (utest_state.output) {
