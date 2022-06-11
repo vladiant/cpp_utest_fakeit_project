@@ -1,5 +1,6 @@
-#include <basic_warper.hpp>
 #include <utest/utest.h>
+
+#include <basic_warper.hpp>
 #include <checked_warper.hpp>
 #include <clamped_warper.hpp>
 #include <cstdint>
@@ -8,30 +9,28 @@
 
 namespace vva {
 
-struct TestIndexedFixture{
+struct TestIndexedFixture {
   std::unique_ptr<IOperationWarper> i;
 };
 
 UTEST_I_SETUP(TestIndexedFixture) {
-  switch (utest_index)
-  {
-  case 0:
-    (utest_fixture->i).reset(new BasicOperationWarper);
-    break;
-  case 1:
-    (utest_fixture->i).reset(new CheckedOperationWarper);
-    break;
-  case 2:
-    (utest_fixture->i).reset(new ClampedOperationWarper);
-    break;
-  default:
-    ASSERT_TRUE(0);
-    break;
+  switch (utest_index) {
+    case 0:
+      (utest_fixture->i).reset(new BasicOperationWarper);
+      break;
+    case 1:
+      (utest_fixture->i).reset(new CheckedOperationWarper);
+      break;
+    case 2:
+      (utest_fixture->i).reset(new ClampedOperationWarper);
+      break;
+    default:
+      ASSERT_TRUE(0);
+      break;
   }
 }
 
-UTEST_I_TEARDOWN(TestIndexedFixture) {
-}
+UTEST_I_TEARDOWN(TestIndexedFixture) {}
 
 UTEST_I(TestIndexedFixture, BasicOperationWarper, 0) {
   OperationStrategy test_strategy(*(utest_fixture->i));

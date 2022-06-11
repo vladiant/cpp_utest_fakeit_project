@@ -26,11 +26,11 @@ struct MockedWarperTest {
 };
 
 UTEST_F_SETUP(MockedWarperTest) {
-  utest_fixture->mockWarper_ = std::make_unique<fakeit::Mock<IOperationWarper>>();
+  utest_fixture->mockWarper_ =
+      std::make_unique<fakeit::Mock<IOperationWarper>>();
 }
 
-UTEST_F_TEARDOWN(MockedWarperTest) {
-}
+UTEST_F_TEARDOWN(MockedWarperTest) {}
 
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_OneToTwo_Three) {
   When(Method(*(utest_fixture->mockWarper_), addition).Using(1, 2)).Return(3);
@@ -44,22 +44,21 @@ UTEST_F(MockedWarperTest, MockedWarperTestAdd_OneToTwo_Three) {
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_OneToTwo_Four) {
   When(Method(*(utest_fixture->mockWarper_), addition)).Return(4);
 
-  EXPECT_EQ(CallMock((utest_fixture->mockWarper_)->get(), &IOperationWarper::addition,
-                     1, 2),
+  EXPECT_EQ(CallMock((utest_fixture->mockWarper_)->get(),
+                     &IOperationWarper::addition, 1, 2),
             4);
 }
 
-UTEST_F(MockedWarperTest,
-                 MockedWarperTestAdd_SignedIntOverflowException) {
+UTEST_F(MockedWarperTest, MockedWarperTestAdd_SignedIntOverflowException) {
   constexpr auto a = kMaxValue;
   constexpr int16_t b = 1;
 
-When(Method(*(utest_fixture->mockWarper_), addition).Using(a, b))
-    .Throw(std::overflow_error("REQUIRE_THROWS_MATCHES"));
+  When(Method(*(utest_fixture->mockWarper_), addition).Using(a, b))
+      .Throw(std::overflow_error("REQUIRE_THROWS_MATCHES"));
 
-EXPECT_EXCEPTION(CallMock((utest_fixture->mockWarper_)->get(), &IOperationWarper::addition, a,
-                           b),
-                  std::overflow_error);
+  EXPECT_EXCEPTION(CallMock((utest_fixture->mockWarper_)->get(),
+                            &IOperationWarper::addition, a, b),
+                   std::overflow_error);
 }
 
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_SignedIntOverflowClamped) {

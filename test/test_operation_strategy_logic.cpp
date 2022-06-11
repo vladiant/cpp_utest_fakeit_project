@@ -1,10 +1,11 @@
 #include <utest/utest.h>
+
 #include <cstdint>
 #include <fakeit/fakeit.hpp>
 #include <i_warper.hpp>
 #include <limits>
-#include <operation_strategy.hpp>
 #include <memory>
+#include <operation_strategy.hpp>
 
 namespace {
 using fakeit::Mock;
@@ -18,11 +19,11 @@ struct MockedOperationStrategyTest {
 };
 
 UTEST_F_SETUP(MockedOperationStrategyTest) {
-  utest_fixture->mockWarper_ = std::make_unique<fakeit::Mock<IOperationWarper>>();
+  utest_fixture->mockWarper_ =
+      std::make_unique<fakeit::Mock<IOperationWarper>>();
 }
 
-UTEST_F_TEARDOWN(MockedOperationStrategyTest) {
-}
+UTEST_F_TEARDOWN(MockedOperationStrategyTest) {}
 
 UTEST_F(MockedOperationStrategyTest, MockOperationStrategy_Arg_Result) {
   constexpr int16_t first_arg = 6;
@@ -33,11 +34,14 @@ UTEST_F(MockedOperationStrategyTest, MockOperationStrategy_Arg_Result) {
   constexpr int16_t second_stage_result = 16;
   constexpr int16_t third_stage_result = 4;
 
-  When(Method(*(utest_fixture->mockWarper_), addition).Using(first_arg, second_arg))
+  When(Method(*(utest_fixture->mockWarper_), addition)
+           .Using(first_arg, second_arg))
       .Return(first_stage_result);
-  When(Method(*(utest_fixture->mockWarper_), multiplication).Using(first_stage_result, 2))
+  When(Method(*(utest_fixture->mockWarper_), multiplication)
+           .Using(first_stage_result, 2))
       .Return(second_stage_result);
-  When(Method(*(utest_fixture->mockWarper_), subtraction).Using(first_arg, second_arg))
+  When(Method(*(utest_fixture->mockWarper_), subtraction)
+           .Using(first_arg, second_arg))
       .Return(third_stage_result);
   When(Method(*(utest_fixture->mockWarper_), division)
            .Using(second_stage_result, third_stage_result))

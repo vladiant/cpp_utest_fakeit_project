@@ -5,9 +5,9 @@
 #include <clamped_warper.hpp>
 #include <cstdint>
 #include <limits>
+#include <memory>
 #include <operation_strategy.hpp>
 #include <stdexcept>
-#include <memory>
 
 namespace {
 constexpr auto kMaxValue = std::numeric_limits<int16_t>::max();
@@ -23,11 +23,11 @@ struct StrategyClampedTest {
 
 UTEST_F_SETUP(StrategyClampedTest) {
   utest_fixture->warper_ = std::make_unique<ClampedOperationWarper>();
-  utest_fixture->test_strategy_ = std::make_unique<OperationStrategy>(*utest_fixture->warper_);
+  utest_fixture->test_strategy_ =
+      std::make_unique<OperationStrategy>(*utest_fixture->warper_);
 }
 
-UTEST_F_TEARDOWN(StrategyClampedTest) {
-}
+UTEST_F_TEARDOWN(StrategyClampedTest) {}
 
 UTEST_F(StrategyClampedTest, StrategyClampedTest_FirstStageOverflow_Exception) {
   constexpr auto a = kMaxValue;
@@ -76,7 +76,7 @@ UTEST_F(StrategyClampedTest,
 }
 
 UTEST_F(StrategyClampedTest,
-                 StrategyClampedTest_ThirdStagedivisionByZero_Exception) {
+        StrategyClampedTest_ThirdStagedivisionByZero_Exception) {
   constexpr auto a = 1;
   constexpr int16_t b = 1;
   auto test_strategy = *utest_fixture->test_strategy_;
@@ -90,14 +90,13 @@ struct StrategyCheckedTest {
 
 UTEST_F_SETUP(StrategyCheckedTest) {
   utest_fixture->warper_ = std::make_unique<CheckedOperationWarper>();
-  utest_fixture->test_strategy_ = std::make_unique<OperationStrategy>(*utest_fixture->warper_);
+  utest_fixture->test_strategy_ =
+      std::make_unique<OperationStrategy>(*utest_fixture->warper_);
 }
 
-UTEST_F_TEARDOWN(StrategyCheckedTest) {
-}
+UTEST_F_TEARDOWN(StrategyCheckedTest) {}
 
-UTEST_F(StrategyCheckedTest,
-                 StrategyCheckedTest_FirstStageOverflow_Exception) {
+UTEST_F(StrategyCheckedTest, StrategyCheckedTest_FirstStageOverflow_Exception) {
   constexpr auto a = kMaxValue;
   constexpr int16_t b = 1;
   auto test_strategy = *utest_fixture->test_strategy_;
@@ -105,7 +104,7 @@ UTEST_F(StrategyCheckedTest,
 }
 
 UTEST_F(StrategyCheckedTest,
-                 StrategyCheckedTest_FirstStageUnderflow_Exception) {
+        StrategyCheckedTest_FirstStageUnderflow_Exception) {
   constexpr auto a = kMinValue;
   constexpr int16_t b = -1;
   auto test_strategy = *utest_fixture->test_strategy_;
@@ -113,7 +112,7 @@ UTEST_F(StrategyCheckedTest,
 }
 
 UTEST_F(StrategyCheckedTest,
-                 StrategyCheckedTest_SecondStageOverflow_Exception) {
+        StrategyCheckedTest_SecondStageOverflow_Exception) {
   constexpr auto a = kMaxValue / 2;
   constexpr int16_t b = 1;
   auto test_strategy = *utest_fixture->test_strategy_;
@@ -121,15 +120,14 @@ UTEST_F(StrategyCheckedTest,
 }
 
 UTEST_F(StrategyCheckedTest,
-                 StrategyCheckedTest_SecondStageUnderflow_Exception) {
+        StrategyCheckedTest_SecondStageUnderflow_Exception) {
   constexpr auto a = kMinValue / 2;
   constexpr int16_t b = -1;
   auto test_strategy = *utest_fixture->test_strategy_;
   EXPECT_EXCEPTION(test_strategy(a, b), std::underflow_error);
 }
 
-UTEST_F(StrategyCheckedTest,
-                 StrategyCheckedTest_ThirdStageOverflow_Exception) {
+UTEST_F(StrategyCheckedTest, StrategyCheckedTest_ThirdStageOverflow_Exception) {
   constexpr auto a = 1 + kMaxValue / 2;
   constexpr int16_t b = kMinValue / 2;
   auto test_strategy = *utest_fixture->test_strategy_;
@@ -137,7 +135,7 @@ UTEST_F(StrategyCheckedTest,
 }
 
 UTEST_F(StrategyCheckedTest,
-                 StrategyCheckedTest_ThirdStageUnderflow_Exception) {
+        StrategyCheckedTest_ThirdStageUnderflow_Exception) {
   constexpr auto a = 1 - kMaxValue / 2;
   constexpr int16_t b = kMinValue / 2;
   auto test_strategy = *utest_fixture->test_strategy_;
@@ -145,7 +143,7 @@ UTEST_F(StrategyCheckedTest,
 }
 
 UTEST_F(StrategyCheckedTest,
-                 StrategyCheckedTest_ThirdStagedivisionByZero_Exception) {
+        StrategyCheckedTest_ThirdStagedivisionByZero_Exception) {
   constexpr auto a = 1;
   constexpr int16_t b = 1;
   auto test_strategy = *utest_fixture->test_strategy_;
