@@ -79,12 +79,11 @@ UTEST_F(ClampedWarperTest, ClampedWarperTestDivide_TenByTwo_Five) {
   EXPECT_EQ(utest_fixture->warper_.division(10, 2), 5);
 }
 
-UTEST_F(ClampedWarperTest,
-                 ClampedWarperTestDivide_DivisionByZero_Exception) {
+UTEST_F(ClampedWarperTest, ClampedWarperTestDivide_DivisionByZero_Exception) {
   constexpr auto a = 10;
   constexpr int16_t b = 0;
   EXPECT_EXCEPTION(utest_fixture->warper_.division(a, b),
-  std::invalid_argument);
+                   std::invalid_argument);
 }
 
 }  // namespace vva
