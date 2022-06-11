@@ -15,13 +15,13 @@ struct TestIndexedFixture {
 
 UTEST_I_SETUP(TestIndexedFixture) {
   switch (utest_index) {
-    case 0:
+    case 1:
       (utest_fixture->i).reset(new BasicOperationWarper);
       break;
-    case 1:
+    case 2:
       (utest_fixture->i).reset(new CheckedOperationWarper);
       break;
-    case 2:
+    case 3:
       (utest_fixture->i).reset(new ClampedOperationWarper);
       break;
     default:
@@ -32,19 +32,19 @@ UTEST_I_SETUP(TestIndexedFixture) {
 
 UTEST_I_TEARDOWN(TestIndexedFixture) {}
 
-UTEST_I(TestIndexedFixture, BasicOperationWarper, 0) {
+UTEST_I(TestIndexedFixture, BasicOperationWarper, 1) {
   OperationStrategy test_strategy(*(utest_fixture->i));
 
   EXPECT_EQ(test_strategy(6, 2), 4);
 }
 
-UTEST_I(TestIndexedFixture, CheckedOperationWarper, 1) {
+UTEST_I(TestIndexedFixture, CheckedOperationWarper, 2) {
   OperationStrategy test_strategy(*(utest_fixture->i));
 
   EXPECT_EQ(test_strategy(6, 2), 4);
 }
 
-UTEST_I(TestIndexedFixture, ClampedOperationWarper, 2) {
+UTEST_I(TestIndexedFixture, ClampedOperationWarper, 3) {
   OperationStrategy test_strategy(*(utest_fixture->i));
 
   EXPECT_EQ(test_strategy(6, 2), 4);
