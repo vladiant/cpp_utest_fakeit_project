@@ -1,24 +1,41 @@
+#include <utest/utest.h>
+
 #include <basic_warper.hpp>
-#include <catch2/catch.hpp>
 #include <checked_warper.hpp>
 #include <clamped_warper.hpp>
 #include <cstdint>
+#include <memory>
 #include <operation_strategy.hpp>
 
 namespace vva {
 
-TEST_CASE("GeneralOperationStrategy", "[operation-strategy-logic]") {
-  BasicOperationWarper basic_warper;
-  CheckedOperationWarper checked_warper;
-  ClampedOperationWarper clamped_warper;
+struct TestIndexedFixture {
+  std::unique_ptr<IOperationWarper> i;
+};
 
-  IOperationWarper* i =
-      GENERATE_REF(&basic_warper, &checked_warper, &clamped_warper);
+UTEST_I_SETUP(TestIndexedFixture) {
+  switch (utest_index) {
+    case 0:
+      (utest_fixture->i).reset(new BasicOperationWarper);
+      break;
+    case 1:
+      (utest_fixture->i).reset(new CheckedOperationWarper);
+      break;
+    case 2:
+      (utest_fixture->i).reset(new ClampedOperationWarper);
+      break;
+    default:
+      ASSERT_TRUE(0);
+      break;
+  }
+}
 
-  REQUIRE(nullptr != i);
-  OperationStrategy test_strategy(*i);
+UTEST_I_TEARDOWN(TestIndexedFixture) {}
 
-  REQUIRE(test_strategy(6, 2) == 4);
+UTEST_I(TestIndexedFixture, OperationWarper, 3) {
+  OperationStrategy test_strategy(*(utest_fixture->i));
+
+  EXPECT_EQ(test_strategy(6, 2), 4);
 }
 
 }  // namespace vva
