@@ -15,9 +15,13 @@ struct ClampedWarperTest {
   ClampedOperationWarper warper_;
 };
 
-UTEST_F_SETUP(ClampedWarperTest) { static_cast<void>(utest_fixture->warper_); }
+UTEST_F_SETUP(ClampedWarperTest) { 
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_fixture->warper_);
+}
 
 UTEST_F_TEARDOWN(ClampedWarperTest) {
+  static_cast<void>(utest_result);
   static_cast<void>(utest_fixture->warper_);
 }
 

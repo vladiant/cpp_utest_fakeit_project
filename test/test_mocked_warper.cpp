@@ -26,11 +26,15 @@ struct MockedWarperTest {
 };
 
 UTEST_F_SETUP(MockedWarperTest) {
+  static_cast<void>(utest_result);
   utest_fixture->mockWarper_ =
       std::make_unique<fakeit::Mock<IOperationWarper>>();
 }
 
-UTEST_F_TEARDOWN(MockedWarperTest) {}
+UTEST_F_TEARDOWN(MockedWarperTest) {
+  static_cast<void>(utest_fixture);
+  static_cast<void>(utest_result);
+}
 
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_OneToTwo_Three) {
   When(Method(*(utest_fixture->mockWarper_), addition).Using(1, 2)).Return(3);

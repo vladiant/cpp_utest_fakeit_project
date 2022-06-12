@@ -22,12 +22,16 @@ struct StrategyClampedTest {
 };
 
 UTEST_F_SETUP(StrategyClampedTest) {
+  static_cast<void>(utest_result);
   utest_fixture->warper_ = std::make_unique<ClampedOperationWarper>();
   utest_fixture->test_strategy_ =
       std::make_unique<OperationStrategy>(*utest_fixture->warper_);
 }
 
-UTEST_F_TEARDOWN(StrategyClampedTest) {}
+UTEST_F_TEARDOWN(StrategyClampedTest) {
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_fixture);
+}
 
 UTEST_F(StrategyClampedTest, StrategyClampedTest_FirstStageOverflow_Exception) {
   constexpr auto a = kMaxValue;
@@ -89,12 +93,16 @@ struct StrategyCheckedTest {
 };
 
 UTEST_F_SETUP(StrategyCheckedTest) {
+  static_cast<void>(utest_result);
   utest_fixture->warper_ = std::make_unique<CheckedOperationWarper>();
   utest_fixture->test_strategy_ =
       std::make_unique<OperationStrategy>(*utest_fixture->warper_);
 }
 
-UTEST_F_TEARDOWN(StrategyCheckedTest) {}
+UTEST_F_TEARDOWN(StrategyCheckedTest) {
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_fixture);
+}
 
 UTEST_F(StrategyCheckedTest, StrategyCheckedTest_FirstStageOverflow_Exception) {
   constexpr auto a = kMaxValue;

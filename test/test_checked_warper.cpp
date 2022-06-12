@@ -15,9 +15,13 @@ struct CheckedWarperTest {
   CheckedOperationWarper warper_;
 };
 
-UTEST_F_SETUP(CheckedWarperTest) { static_cast<void>(utest_fixture->warper_); }
+UTEST_F_SETUP(CheckedWarperTest) {
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_fixture->warper_);
+}
 
 UTEST_F_TEARDOWN(CheckedWarperTest) {
+  static_cast<void>(utest_result);
   static_cast<void>(utest_fixture->warper_);
 }
 
