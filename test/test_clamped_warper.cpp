@@ -3,8 +3,8 @@
 #include <clamped_warper.hpp>
 #include <cstdint>
 #include <limits>
-#include <stdexcept>
 #include <memory>
+#include <stdexcept>
 
 namespace {
 constexpr auto kMaxValue = std::numeric_limits<int16_t>::max();
