@@ -14,9 +14,14 @@ struct BasicWarperTest {
   BasicOperationWarper warper_;
 };
 
-UTEST_F_SETUP(BasicWarperTest) { static_cast<void>(utest_fixture->warper_); }
+UTEST_F_SETUP(BasicWarperTest) { 
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_fixture->warper_); }
 
-UTEST_F_TEARDOWN(BasicWarperTest) { static_cast<void>(utest_fixture->warper_); }
+UTEST_F_TEARDOWN(BasicWarperTest) { 
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_fixture->warper_);
+}
 
 UTEST_F(BasicWarperTest, BasicWarperTestAdd_OneToTwo_Three) {
   EXPECT_EQ(utest_fixture->warper_.addition(1, 2), 3);
