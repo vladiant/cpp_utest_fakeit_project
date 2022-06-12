@@ -3,8 +3,8 @@
 #include <checked_warper.hpp>
 #include <cstdint>
 #include <limits>
-#include <stdexcept>
 #include <memory>
+#include <stdexcept>
 
 namespace {
 constexpr auto kMaxValue = std::numeric_limits<int16_t>::max();
@@ -39,7 +39,8 @@ UTEST_F(CheckedWarperTest, CheckedWarperTestAdd_SignedIntOverflow_Exception) {
 UTEST_F(CheckedWarperTest, CheckedWarperTestAdd_SignedIntUnderflow_Exception) {
   constexpr auto a = kMinValue;
   constexpr int16_t b = -1;
-  EXPECT_EXCEPTION(utest_fixture->warper_->addition(a, b), std::underflow_error);
+  EXPECT_EXCEPTION(utest_fixture->warper_->addition(a, b),
+                   std::underflow_error);
 }
 
 UTEST_F(CheckedWarperTest, CheckedWarperTestSubtract_ThreeByFive_Two) {
