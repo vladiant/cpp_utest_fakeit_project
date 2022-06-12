@@ -21,9 +21,13 @@ struct MockedOperationStrategyTest {
 UTEST_F_SETUP(MockedOperationStrategyTest) {
   utest_fixture->mockWarper_ =
       std::make_unique<fakeit::Mock<IOperationWarper>>();
+  static_cast<void>(utest_result);
 }
 
-UTEST_F_TEARDOWN(MockedOperationStrategyTest) {}
+UTEST_F_TEARDOWN(MockedOperationStrategyTest) {
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_fixture);
+}
 
 UTEST_F(MockedOperationStrategyTest, MockOperationStrategy_Arg_Result) {
   constexpr int16_t first_arg = 6;

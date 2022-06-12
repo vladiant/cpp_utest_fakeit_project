@@ -10,19 +10,19 @@
 namespace vva {
 
 struct TestIndexedFixture {
-  std::unique_ptr<IOperationWarper> i;
+  IOperationWarper* i;
 };
 
 UTEST_I_SETUP(TestIndexedFixture) {
   switch (utest_index) {
     case 0:
-      (utest_fixture->i).reset(new BasicOperationWarper);
+      utest_fixture->i = new BasicOperationWarper;
       break;
     case 1:
-      (utest_fixture->i).reset(new CheckedOperationWarper);
+      utest_fixture->i = new CheckedOperationWarper;
       break;
     case 2:
-      (utest_fixture->i).reset(new ClampedOperationWarper);
+      utest_fixture->i = new ClampedOperationWarper;
       break;
     default:
       ASSERT_TRUE(0);
@@ -30,7 +30,11 @@ UTEST_I_SETUP(TestIndexedFixture) {
   }
 }
 
-UTEST_I_TEARDOWN(TestIndexedFixture) {}
+UTEST_I_TEARDOWN(TestIndexedFixture) {
+  static_cast<void>(utest_result);
+  static_cast<void>(utest_index);
+  delete utest_fixture->i;
+}
 
 UTEST_I(TestIndexedFixture, OperationWarper, 3) {
   OperationStrategy test_strategy(*(utest_fixture->i));
