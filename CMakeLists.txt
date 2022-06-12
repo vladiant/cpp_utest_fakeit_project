@@ -108,7 +108,7 @@ target_include_directories(
 target_compile_options(
     TestSampleLib
     PRIVATE
-         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+         $<$<CXX_COMPILER_ID:MSVC>:/W4>
 )
 
 target_link_libraries(
