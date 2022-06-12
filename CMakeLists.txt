@@ -105,13 +105,6 @@ target_include_directories(
         .
 )
 
-target_compile_options(
-    TestSampleLib
-    PRIVATE
-         $<$<CXX_COMPILER_ID:MSVC>:/W4>
-         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic>
-)
-
 target_link_libraries(
     TestSampleLib
     PRIVATE
