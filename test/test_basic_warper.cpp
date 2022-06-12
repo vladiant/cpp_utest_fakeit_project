@@ -14,11 +14,12 @@ struct BasicWarperTest {
   BasicOperationWarper warper_;
 };
 
-UTEST_F_SETUP(BasicWarperTest) { 
+UTEST_F_SETUP(BasicWarperTest) {
   static_cast<void>(utest_result);
-  static_cast<void>(utest_fixture->warper_); }
+  static_cast<void>(utest_fixture->warper_);
+}
 
-UTEST_F_TEARDOWN(BasicWarperTest) { 
+UTEST_F_TEARDOWN(BasicWarperTest) {
   static_cast<void>(utest_result);
   static_cast<void>(utest_fixture->warper_);
 }
