@@ -3,7 +3,7 @@ name: Windows CMake
 on: push
 
 env:
-  BUILD_TYPE: Debug
+  BUILD_TYPE: Release
 
 jobs:
   build:
@@ -55,12 +55,8 @@ jobs:
       shell: bash
       run: $BUILD_TYPE/SampleLibApp.exe
 
-    # - name: Test
-    #   working-directory: ${{github.workspace}}/build
-    #   shell: bash
-    #   run: ctest -C $BUILD_TYPE
-
-    - name: Run Test Executable
+    - name: Test
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: $BUILD_TYPE/TestSampleLib
+      run: ctest -C $BUILD_TYPE
+
