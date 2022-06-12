@@ -106,9 +106,10 @@ target_include_directories(
 )
 
 target_compile_options(
-    SampleLibApp
+    TestSampleLib
     PRIVATE
-         $<$<CXX_COMPILER_ID:MSVC>:/fsanitize=address>
+         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
 )
 
 target_link_libraries(
