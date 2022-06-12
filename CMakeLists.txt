@@ -73,7 +73,7 @@ include(CTest)
 
 add_executable(
     TestSampleLib
-    # test/test_simple_calc.cpp
+    test/test_simple_calc.cpp
     # test/test_basic_warper.cpp
     # test/test_checked_warper.cpp
     # test/test_clamped_warper.cpp
