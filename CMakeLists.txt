@@ -58,8 +58,8 @@ set_target_properties(
 target_compile_options(
     SampleLibApp
     PRIVATE
-         $<$<CXX_COMPILER_ID:MSVC>:/W4>
-         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic>
+         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
 )
 
 target_link_libraries(
@@ -108,8 +108,8 @@ target_include_directories(
 target_compile_options(
     TestSampleLib
     PRIVATE
-         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
-         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+         $<$<CXX_COMPILER_ID:MSVC>:/W4>
+         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic>
 )
 
 target_link_libraries(
