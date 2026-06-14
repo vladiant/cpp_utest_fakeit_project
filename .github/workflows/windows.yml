@@ -1,6 +1,15 @@
 name: Windows CMake
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
 
 env:
   BUILD_TYPE: Release
