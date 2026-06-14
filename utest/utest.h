@@ -969,6 +969,7 @@ utest_type_printer(long long unsigned int i) {
                           utest_state.tests_length));                          \
     utest_state.tests[index].func = &utest_f_##FIXTURE##_##NAME;               \
     utest_state.tests[index].name = name;                                      \
+    utest_state.tests[index].index = 0;                                        \
     UTEST_SNPRINTF(name, name_size, "%s", name_part);                          \
   }                                                                            \
   UTEST_FIXTURE_SURPRESS_WARNINGS_END                                          \
