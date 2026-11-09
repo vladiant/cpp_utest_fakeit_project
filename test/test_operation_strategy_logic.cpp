@@ -30,19 +30,20 @@ UTEST_F_TEARDOWN(MockedOperationStrategyTest) {
 }
 
 UTEST_F(MockedOperationStrategyTest, MockOperationStrategy_Arg_Result) {
-  constexpr int16_t first_arg = 6;
-  constexpr int16_t second_arg = 2;
+  const int16_t first_arg = 6;
+  const int16_t second_arg = 2;
   constexpr int16_t operation_result = 4;
 
-  constexpr int16_t first_stage_result = 8;
-  constexpr int16_t second_stage_result = 16;
-  constexpr int16_t third_stage_result = 4;
+  const int16_t first_stage_result = 8;
+  const int16_t second_stage_result = 16;
+  const int16_t third_stage_result = 4;
+  const int16_t multiplier_arg = 2;
 
   When(Method(*(utest_fixture->mockWarper_), addition)
            .Using(first_arg, second_arg))
       .Return(first_stage_result);
   When(Method(*(utest_fixture->mockWarper_), multiplication)
-           .Using(first_stage_result, 2))
+           .Using(first_stage_result, multiplier_arg))
       .Return(second_stage_result);
   When(Method(*(utest_fixture->mockWarper_), subtraction)
            .Using(first_arg, second_arg))

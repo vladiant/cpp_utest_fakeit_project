@@ -1,0 +1,131 @@
+Start testing: Nov 09 18:56 UTC
+----------------------------------------------------------
+1/1 Testing: TestSampleLib
+1/1 Test: TestSampleLib
+Command: "/home/runner/work/cpp_utest_fakeit_project/cpp_utest_fakeit_project/build-clang-msan/TestSampleLib"
+Directory: /home/runner/work/cpp_utest_fakeit_project/cpp_utest_fakeit_project/build-clang-msan
+"TestSampleLib" start time: Nov 09 18:56 UTC
+Output:
+----------------------------------------------------------
+[==========] Running 55 test cases.
+[ RUN      ] TestAdd_OneToTwo_Three.simple_calc
+[       OK ] TestAdd_OneToTwo_Three.simple_calc (2000ns)
+[ RUN      ] TestAdd_UnsignedIntOverflow.simple_calc
+[       OK ] TestAdd_UnsignedIntOverflow.simple_calc (1000ns)
+[ RUN      ] TestAdd_SignedIntOverflow.simple_calc
+[       OK ] TestAdd_SignedIntOverflow.simple_calc (0ns)
+[ RUN      ] TestSubtract_ThreeByFive_Two.simple_calc
+[       OK ] TestSubtract_ThreeByFive_Two.simple_calc (0ns)
+[ RUN      ] TestMultiply_FiveBySix_Thirty.simple_calc
+[       OK ] TestMultiply_FiveBySix_Thirty.simple_calc (1000ns)
+[ RUN      ] TestDivide_TenByTwo_Five.simple_calc
+[       OK ] TestDivide_TenByTwo_Five.simple_calc (1000ns)
+[ RUN      ] BasicWarperTest.BasicWarperTestAdd_OneToTwo_Three
+[       OK ] BasicWarperTest.BasicWarperTestAdd_OneToTwo_Three (57000ns)
+[ RUN      ] BasicWarperTest.BasicWarperTestAdd_SignedIntOverflow
+[       OK ] BasicWarperTest.BasicWarperTestAdd_SignedIntOverflow (1000ns)
+[ RUN      ] BasicWarperTest.BasicWarperTestSubtract_ThreeByFive_Two
+[       OK ] BasicWarperTest.BasicWarperTestSubtract_ThreeByFive_Two (1000ns)
+[ RUN      ] BasicWarperTest.BasicWarperTestMultiply_FiveBySix_Thirty
+[       OK ] BasicWarperTest.BasicWarperTestMultiply_FiveBySix_Thirty (1000ns)
+[ RUN      ] BasicWarperTest.BasicWarperTestDivide_TenByTwo_Five
+[       OK ] BasicWarperTest.BasicWarperTestDivide_TenByTwo_Five (1000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestAdd_OneToTwo_Three
+[       OK ] CheckedWarperTest.CheckedWarperTestAdd_OneToTwo_Three (1000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestAdd_SignedIntOverflow_Exception
+[       OK ] CheckedWarperTest.CheckedWarperTestAdd_SignedIntOverflow_Exception (76000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestAdd_SignedIntUnderflow_Exception
+[       OK ] CheckedWarperTest.CheckedWarperTestAdd_SignedIntUnderflow_Exception (6000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestSubtract_ThreeByFive_Two
+[       OK ] CheckedWarperTest.CheckedWarperTestSubtract_ThreeByFive_Two (1000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestSubtract_SignedIntOverflow_Exception
+[       OK ] CheckedWarperTest.CheckedWarperTestSubtract_SignedIntOverflow_Exception (5000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestSubtract_SignedIntUnderflow_Exception
+[       OK ] CheckedWarperTest.CheckedWarperTestSubtract_SignedIntUnderflow_Exception (4000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestMultiply_FiveBySix_Thirty
+[       OK ] CheckedWarperTest.CheckedWarperTestMultiply_FiveBySix_Thirty (2000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestMultiply_SignedIntOverflow_Exception
+[       OK ] CheckedWarperTest.CheckedWarperTestMultiply_SignedIntOverflow_Exception (4000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestMultiply_SignedIntUnderflow_Exception
+[       OK ] CheckedWarperTest.CheckedWarperTestMultiply_SignedIntUnderflow_Exception (4000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestDivide_TenByTwo_Five
+[       OK ] CheckedWarperTest.CheckedWarperTestDivide_TenByTwo_Five (2000ns)
+[ RUN      ] CheckedWarperTest.CheckedWarperTestDivide_DivisionByZero_Exception
+[       OK ] CheckedWarperTest.CheckedWarperTestDivide_DivisionByZero_Exception (6000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestAdd_OneToTwo_Three
+[       OK ] ClampedWarperTest.ClampedWarperTestAdd_OneToTwo_Three (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestAdd_SignedIntOverflow_ClampedToMax
+[       OK ] ClampedWarperTest.ClampedWarperTestAdd_SignedIntOverflow_ClampedToMax (2000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestAdd_SignedIntUnderflow_ClampedToMin
+[       OK ] ClampedWarperTest.ClampedWarperTestAdd_SignedIntUnderflow_ClampedToMin (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestSubtract_ThreeByFive_Two
+[       OK ] ClampedWarperTest.ClampedWarperTestSubtract_ThreeByFive_Two (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestSubtract_SignedIntOverflow_ClampedToMax
+[       OK ] ClampedWarperTest.ClampedWarperTestSubtract_SignedIntOverflow_ClampedToMax (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestSubtract_SignedIntUnderflow_ClampedToMin
+[       OK ] ClampedWarperTest.ClampedWarperTestSubtract_SignedIntUnderflow_ClampedToMin (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestMultiply_FiveBySix_Thirty
+[       OK ] ClampedWarperTest.ClampedWarperTestMultiply_FiveBySix_Thirty (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestMultiply_SignedIntOverflow_ClampedToMax
+[       OK ] ClampedWarperTest.ClampedWarperTestMultiply_SignedIntOverflow_ClampedToMax (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestMultiply_SignedIntUnderflow_ClampedToMin
+[       OK ] ClampedWarperTest.ClampedWarperTestMultiply_SignedIntUnderflow_ClampedToMin (2000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestDivide_TenByTwo_Five
+[       OK ] ClampedWarperTest.ClampedWarperTestDivide_TenByTwo_Five (1000ns)
+[ RUN      ] ClampedWarperTest.ClampedWarperTestDivide_DivisionByZero_Exception
+[       OK ] ClampedWarperTest.ClampedWarperTestDivide_DivisionByZero_Exception (5000ns)
+[ RUN      ] MockedWarperTest.MockedWarperTestAdd_OneToTwo_Three
+[       OK ] MockedWarperTest.MockedWarperTestAdd_OneToTwo_Three (49000ns)
+[ RUN      ] MockedWarperTest.MockedWarperTestAdd_OneToTwo_Four
+[       OK ] MockedWarperTest.MockedWarperTestAdd_OneToTwo_Four (16000ns)
+[ RUN      ] MockedWarperTest.MockedWarperTestAdd_SignedIntOverflowException
+[       OK ] MockedWarperTest.MockedWarperTestAdd_SignedIntOverflowException (37000ns)
+[ RUN      ] MockedWarperTest.MockedWarperTestAdd_SignedIntOverflowClamped
+[       OK ] MockedWarperTest.MockedWarperTestAdd_SignedIntOverflowClamped (18000ns)
+[ RUN      ] TestIndexedFixture.OperationWarper/0
+[       OK ] TestIndexedFixture.OperationWarper/0 (1000ns)
+[ RUN      ] TestIndexedFixture.OperationWarper/1
+[       OK ] TestIndexedFixture.OperationWarper/1 (2000ns)
+[ RUN      ] TestIndexedFixture.OperationWarper/2
+[       OK ] TestIndexedFixture.OperationWarper/2 (1000ns)
+[ RUN      ] MockedOperationStrategyTest.MockOperationStrategy_Arg_Result
+[       OK ] MockedOperationStrategyTest.MockOperationStrategy_Arg_Result (56000ns)
+[ RUN      ] StrategyClampedTest.StrategyClampedTest_FirstStageOverflow_Exception
+[       OK ] StrategyClampedTest.StrategyClampedTest_FirstStageOverflow_Exception (2000ns)
+[ RUN      ] StrategyClampedTest.StrategyClampedTest_FirstStageUnderflow_Exception
+[       OK ] StrategyClampedTest.StrategyClampedTest_FirstStageUnderflow_Exception (2000ns)
+[ RUN      ] StrategyClampedTest.StrategyClampedTest_SecondStageOverflow_Exception
+[       OK ] StrategyClampedTest.StrategyClampedTest_SecondStageOverflow_Exception (1000ns)
+[ RUN      ] StrategyClampedTest.StrategyClampedTest_SecondStageUnderflow_Exception
+[       OK ] StrategyClampedTest.StrategyClampedTest_SecondStageUnderflow_Exception (1000ns)
+[ RUN      ] StrategyClampedTest.StrategyClampedTest_ThirdStageOverflow_Exception
+[       OK ] StrategyClampedTest.StrategyClampedTest_ThirdStageOverflow_Exception (2000ns)
+[ RUN      ] StrategyClampedTest.StrategyClampedTest_ThirdStageUnderflow_Exception
+[       OK ] StrategyClampedTest.StrategyClampedTest_ThirdStageUnderflow_Exception (1000ns)
+[ RUN      ] StrategyClampedTest.StrategyClampedTest_ThirdStagedivisionByZero_Exception
+[       OK ] StrategyClampedTest.StrategyClampedTest_ThirdStagedivisionByZero_Exception (6000ns)
+[ RUN      ] StrategyCheckedTest.StrategyCheckedTest_FirstStageOverflow_Exception
+[       OK ] StrategyCheckedTest.StrategyCheckedTest_FirstStageOverflow_Exception (6000ns)
+[ RUN      ] StrategyCheckedTest.StrategyCheckedTest_FirstStageUnderflow_Exception
+[       OK ] StrategyCheckedTest.StrategyCheckedTest_FirstStageUnderflow_Exception (4000ns)
+[ RUN      ] StrategyCheckedTest.StrategyCheckedTest_SecondStageOverflow_Exception
+[       OK ] StrategyCheckedTest.StrategyCheckedTest_SecondStageOverflow_Exception (5000ns)
+[ RUN      ] StrategyCheckedTest.StrategyCheckedTest_SecondStageUnderflow_Exception
+[       OK ] StrategyCheckedTest.StrategyCheckedTest_SecondStageUnderflow_Exception (4000ns)
+[ RUN      ] StrategyCheckedTest.StrategyCheckedTest_ThirdStageOverflow_Exception
+[       OK ] StrategyCheckedTest.StrategyCheckedTest_ThirdStageOverflow_Exception (5000ns)
+[ RUN      ] StrategyCheckedTest.StrategyCheckedTest_ThirdStageUnderflow_Exception
+[       OK ] StrategyCheckedTest.StrategyCheckedTest_ThirdStageUnderflow_Exception (4000ns)
+[ RUN      ] StrategyCheckedTest.StrategyCheckedTest_ThirdStagedivisionByZero_Exception
+[       OK ] StrategyCheckedTest.StrategyCheckedTest_ThirdStagedivisionByZero_Exception (5000ns)
+[==========] 55 test cases ran.
+[  PASSED  ] 55 tests.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"TestSampleLib" end time: Nov 09 18:56 UTC
+"TestSampleLib" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 09 18:56 UTC

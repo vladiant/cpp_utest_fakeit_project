@@ -37,8 +37,8 @@ UTEST_F_TEARDOWN(MockedWarperTest) {
 }
 
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_OneToTwo_Three) {
-  constexpr int16_t a = 1;
-  constexpr int16_t b = 2;
+  const int16_t a = 1;
+  const int16_t b = 2;
 
   When(Method(*(utest_fixture->mockWarper_), addition).Using(a, b)).Return(3);
 
@@ -57,8 +57,8 @@ UTEST_F(MockedWarperTest, MockedWarperTestAdd_OneToTwo_Four) {
 }
 
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_SignedIntOverflowException) {
-  constexpr auto a = kMaxValue;
-  constexpr int16_t b = 1;
+  const int16_t a = kMaxValue;
+  const int16_t b = 1;
 
   When(Method(*(utest_fixture->mockWarper_), addition).Using(a, b))
       .Throw(std::overflow_error("REQUIRE_THROWS_MATCHES"));
@@ -69,8 +69,8 @@ UTEST_F(MockedWarperTest, MockedWarperTestAdd_SignedIntOverflowException) {
 }
 
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_SignedIntOverflowClamped) {
-  constexpr auto a = kMaxValue;
-  constexpr int16_t b = 1;
+  const int16_t a = kMaxValue;
+  const int16_t b = 1;
 
   When(Method(*(utest_fixture->mockWarper_), addition).Using(a, b)).Return(a);
 
