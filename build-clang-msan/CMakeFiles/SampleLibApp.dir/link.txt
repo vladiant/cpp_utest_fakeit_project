@@ -1,1 +1,0 @@
-/usr/bin/clang++ -O1 -g -fsanitize=memory -fno-omit-frame-pointer -Xlinker --dependency-file=CMakeFiles/SampleLibApp.dir/link.d CMakeFiles/SampleLibApp.dir/app/main.cpp.o -o SampleLibApp  libSampleLib.a
