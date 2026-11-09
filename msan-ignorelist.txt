@@ -1,0 +1,13 @@
+# MemorySanitizer ignorelist.
+#
+# MSan requires every piece of code touching tracked memory to be instrumented,
+# including the C++ standard library. The CI image links against the system
+# libstdc++, which is not MSan-instrumented. When the vendored FakeIt header
+# builds method-detail strings via std::string's out-of-line operator+ (compiled
+# inside libstdc++), the resulting heap buffer's shadow stays "uninitialized"
+# from MSan's point of view, producing a false positive in basic_string's
+# destructor (fakeit.hpp setMethodDetails).
+#
+# Excluding the third-party FakeIt header from instrumentation suppresses these
+# false positives while keeping MSan coverage for the project's own code.
+src:*fakeit.hpp
