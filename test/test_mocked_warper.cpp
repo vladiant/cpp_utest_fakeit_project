@@ -37,10 +37,13 @@ UTEST_F_TEARDOWN(MockedWarperTest) {
 }
 
 UTEST_F(MockedWarperTest, MockedWarperTestAdd_OneToTwo_Three) {
-  When(Method(*(utest_fixture->mockWarper_), addition).Using(1, 2)).Return(3);
+  constexpr int16_t a = 1;
+  constexpr int16_t b = 2;
+
+  When(Method(*(utest_fixture->mockWarper_), addition).Using(a, b)).Return(3);
 
   EXPECT_EQ(CallMock((utest_fixture->mockWarper_)->get(),
-                     &IOperationWarper::addition, 1, 2),
+                    &IOperationWarper::addition, a, b),
             3);
 }
 
