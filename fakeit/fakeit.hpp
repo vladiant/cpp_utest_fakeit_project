@@ -2,13 +2,12 @@
 /*
  *  FakeIt - A Simplified C++ Mocking Framework
  *  Copyright (c) Eran Pe'er 2013
- *  Generated: 2025-11-06 22:16:17.962670
+ *  Generated: 2025-11-06 22:16:18.116303
  *  Distributed under the MIT License. Please refer to the LICENSE file at:
  *  https://github.com/eranpeer/FakeIt
  */
 
-#ifndef fakeit_h__
-#define fakeit_h__
+
 
 
 
@@ -1168,27 +1167,62 @@ namespace fakeit {
     }
 
 }
-#if defined __has_include
-#   if __has_include("catch2/catch.hpp")
-#      include <catch2/catch.hpp>
-#   elif __has_include("catch2/catch_all.hpp")
-#      include <catch2/catch_assertion_result.hpp>
-#      include <catch2/catch_test_macros.hpp>
-#   elif __has_include("catch_amalgamated.hpp")
-#      include <catch_amalgamated.hpp>
-#   else
-#      include <catch.hpp>
-#   endif
-#else
-#   include <catch2/catch.hpp>
-#endif
 
 namespace fakeit {
 
-    class CatchAdapter : public EventHandler {
-        EventFormatter &_formatter;
+    struct VerificationException : public std::exception {
+        ~VerificationException() FAKEIT_NO_THROWS override {};
 
-        std::string formatLineNumber(std::string file, int num) {
+        VerificationException(std::string format) :
+            _format(format) {
+        }
+
+        friend std::ostream &operator<<(std::ostream &os, const VerificationException &val) {
+            os << val.what();
+            return os;
+        }
+
+        void setFileInfo(std::string aFile, int aLine, std::string aCallingMethod) {
+            _file = aFile;
+            _callingMethod = aCallingMethod;
+            _line = aLine;
+        }
+
+        const std::string& file() const {
+            return _file;
+        }
+        int line() const {
+            return _line;
+        }
+        const std::string& callingMethod() const {
+            return _callingMethod;
+        }
+
+        const char* what() const FAKEIT_NO_THROWS override {
+            return _format.c_str();
+        }
+    private:
+        std::string _file;
+        int _line;
+        std::string _callingMethod;
+        std::string _format;
+    };
+
+    struct NoMoreInvocationsVerificationException : public VerificationException {
+        NoMoreInvocationsVerificationException(std::string format) :
+            VerificationException(format) {
+        }
+    };
+
+    struct SequenceVerificationException : public VerificationException {
+        SequenceVerificationException(std::string format) :
+            VerificationException(format) {
+        }
+    };
+
+    struct StandaloneAdapter : public EventHandler {
+
+        std::string formatLineNumner(std::string file, int num){
 #ifndef __GNUG__
             return file + std::string("(") + fakeit::to_string(num) + std::string(")");
 #else
@@ -1196,93 +1230,62 @@ namespace fakeit {
 #endif
         }
 
-    public:
+        virtual ~StandaloneAdapter() = default;
 
-        virtual ~CatchAdapter() = default;
-
-        CatchAdapter(EventFormatter &formatter)
-                : _formatter(formatter) {}
-
-        void fail(
-                std::string vetificationType,
-                Catch::SourceLineInfo sourceLineInfo,
-                std::string failingExpression,
-                std::string fomattedMessage,
-                Catch::ResultWas::OfType resultWas = Catch::ResultWas::OfType::ExpressionFailed ){
-            Catch::AssertionHandler catchAssertionHandler( vetificationType, sourceLineInfo, failingExpression, Catch::ResultDisposition::Normal );
-#if defined(CATCH_INTERNAL_START_WARNINGS_SUPPRESSION) && defined(CATCH_INTERNAL_STOP_WARNINGS_SUPPRESSION)
-            INTERNAL_CATCH_TRY { \
-                CATCH_INTERNAL_START_WARNINGS_SUPPRESSION \
-                CATCH_INTERNAL_SUPPRESS_PARENTHESES_WARNINGS \
-                catchAssertionHandler.handleMessage(resultWas, std::move(fomattedMessage)); \
-                CATCH_INTERNAL_STOP_WARNINGS_SUPPRESSION \
-            } INTERNAL_CATCH_CATCH(catchAssertionHandler) { \
-                catchAssertionHandler.complete(); \
-            }
-#else
-            INTERNAL_CATCH_TRY { \
-                CATCH_INTERNAL_SUPPRESS_PARENTHESES_WARNINGS \
-                catchAssertionHandler.handleMessage(resultWas, std::move(fomattedMessage)); \
-                CATCH_INTERNAL_UNSUPPRESS_PARENTHESES_WARNINGS \
-            } INTERNAL_CATCH_CATCH(catchAssertionHandler) { \
-                catchAssertionHandler.complete(); \
-            }
-#endif
+        StandaloneAdapter(EventFormatter &formatter)
+            : _formatter(formatter) {
         }
 
-        virtual void handle(const UnexpectedMethodCallEvent &evt) override {
+        void handle(const UnexpectedMethodCallEvent &evt) override {
             std::string format = _formatter.format(evt);
-            fail("UnexpectedMethodCall",::Catch::SourceLineInfo("Unknown file",0),"",format, Catch::ResultWas::OfType::ExplicitFailure);
+            UnexpectedMethodCallException ex(format);
+            throw ex;
         }
 
-        virtual void handle(const SequenceVerificationEvent &evt) override {
-            std::string format(formatLineNumber(evt.file(), evt.line()) + ": " + _formatter.format(evt));
-            std::string expectedPattern {DefaultEventFormatter::formatExpectedPattern(evt.expectedPattern())};
-            fail("Verify",::Catch::SourceLineInfo(evt.file(),evt.line()),expectedPattern,format);
+        void handle(const SequenceVerificationEvent &evt) override {
+            std::string format(formatLineNumner(evt.file(), evt.line()) + ": " + _formatter.format(evt));
+            SequenceVerificationException e(format);
+            e.setFileInfo(evt.file(), evt.line(), evt.callingMethod());
+            throw e;
         }
 
-
-        virtual void handle(const NoMoreInvocationsVerificationEvent &evt) override {
-            std::string format(formatLineNumber(evt.file(), evt.line()) + ": " + _formatter.format(evt));
-            fail("VerifyNoMoreInvocations",::Catch::SourceLineInfo(evt.file(),evt.line()),"",format);
+        void handle(const NoMoreInvocationsVerificationEvent &evt) override {
+            std::string format(formatLineNumner(evt.file(), evt.line()) + ": " + _formatter.format(evt));
+            NoMoreInvocationsVerificationException e(format);
+            e.setFileInfo(evt.file(), evt.line(), evt.callingMethod());
+            throw e;
         }
 
+    private:
+        EventFormatter &_formatter;
     };
 
-
-    class CatchFakeit : public DefaultFakeit {
-
+    class StandaloneFakeit : public DefaultFakeit {
 
     public:
+        ~StandaloneFakeit() override = default;
 
-        virtual ~CatchFakeit() = default;
+        StandaloneFakeit() : _standaloneAdapter(*this) {
+        }
 
-        CatchFakeit() : _formatter(), _catchAdapter(_formatter) {}
-
-        static CatchFakeit &getInstance() {
-            static CatchFakeit instance;
+        static StandaloneFakeit &getInstance() {
+            static StandaloneFakeit instance;
             return instance;
         }
 
     protected:
 
         fakeit::EventHandler &accessTestingFrameworkAdapter() override {
-            return _catchAdapter;
-        }
-
-        EventFormatter &accessEventFormatter() override {
-            return _formatter;
+            return _standaloneAdapter;
         }
 
     private:
 
-        DefaultEventFormatter _formatter;
-        CatchAdapter _catchAdapter;
+        StandaloneAdapter _standaloneAdapter;
     };
-
 }
 
-static fakeit::DefaultFakeit& Fakeit = fakeit::CatchFakeit::getInstance();
+static fakeit::DefaultFakeit& Fakeit = fakeit::StandaloneFakeit::getInstance();
 
 
 #include <type_traits>
@@ -10321,5 +10324,3 @@ namespace fakeit {
 
 #define When(call) \
     When(call)
-
-#endif
